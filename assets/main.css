@@ -1,0 +1,16 @@
+@import './bootstrap/css/bootstrap.min.css';
+@import './styles/animate.css';
+@import './styles/all.min.css';
+@import './styles/ionicons.min.css';
+@import './styles/themify-icons.css';
+@import './styles/linearicons.css';
+@import './styles/flaticon.css';
+@import './styles/simple-line-icons.css';
+@import './owlcarousel/css/owl.carousel.min.css';
+@import './owlcarousel/css/owl.theme.css';
+@import './owlcarousel/css/owl.theme.default.min.css';
+@import './styles/magnific-popup.css';
+@import './styles/slick.css';
+@import './styles/slick-theme.css';
+@import './styles/style.css';
+@import './styles/responsive.css';
