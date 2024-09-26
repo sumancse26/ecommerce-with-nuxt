@@ -1,6 +1,7 @@
 <script setup>
     import Cookies from 'js-cookie';
     import { useRoute } from 'vue-router';
+    import { navigateTo } from 'nuxt/app';
     const { $axios } = useNuxtApp();
 
     const route = useRoute();
@@ -16,7 +17,7 @@
             const res = await $axios.post('/verify', data);
 
             Cookies.set('token', res.data.token, { expires: 7 });
-            console.log(res);
+            navigateTo('/');
         } catch (e) {
             console.log(e);
         }
@@ -31,7 +32,7 @@
                     <div class="login_wrap">
                         <div class="padding_eight_all bg-white">
                             <div class="heading_s1">
-                                <h3>Enter Otp</h3>
+                                <h3>Verify Otp</h3>
                             </div>
                             <form @submit.prevent="verifyBtnHandler">
                                 <div class="form-group mb-3">
@@ -54,7 +55,7 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <button type="submit" class="btn btn-fill-out btn-block" name="login">
-                                        Verify
+                                        CONFIRM
                                     </button>
                                 </div>
                             </form>

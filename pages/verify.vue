@@ -28,7 +28,7 @@
                     <div class="login_wrap">
                         <div class="padding_eight_all bg-white">
                             <div class="heading_s1">
-                                <h3>Enter Email</h3>
+                                <h3>Login</h3>
                             </div>
                             <form @submit.prevent="sendOtp">
                                 <div class="form-group mb-3">
@@ -41,7 +41,7 @@
                                         placeholder="Your Email" />
                                 </div>
                                 <div class="form-group mb-3">
-                                    <button type="submit" class="btn btn-fill-out btn-block" name="login">Send</button>
+                                    <button type="submit" class="btn btn-fill-out btn-block" name="login">NEXT</button>
                                 </div>
                             </form>
                         </div>

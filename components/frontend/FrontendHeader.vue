@@ -46,39 +46,7 @@
                     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                         <ul class="navbar-nav">
                             <li class="dropdown">
-                                <a data-bs-toggle="dropdown" class="nav-link dropdown-toggle active" href="#">Home</a>
-                                <div class="dropdown-menu">
-                                    <ul>
-                                        <li>
-                                            <a class="dropdown-item nav-link nav_item active" href="index.html"
-                                                >Fashion 1</a
-                                            >
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item nav-link nav_item" href="index-2.html">Fashion 2</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item nav-link nav_item" href="index-3.html"
-                                                >Furniture 1</a
-                                            >
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item nav-link nav_item" href="index-4.html"
-                                                >Furniture 2</a
-                                            >
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item nav-link nav_item" href="index-5.html"
-                                                >Electronics 1</a
-                                            >
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item nav-link nav_item" href="index-6.html"
-                                                >Electronics 2</a
-                                            >
-                                        </li>
-                                    </ul>
-                                </div>
+                                <a class="nav-link active" href="#">Home</a>
                             </li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle nav-link" href="#" data-bs-toggle="dropdown">Pages</a>

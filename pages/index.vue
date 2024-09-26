@@ -1,7 +1,10 @@
+<script setup></script>
+
 <template>
     <div>
         <div class="main_content">
             <FrontendBanner />
+            <FrontendAllProducts />
             <FrontendNewCollection />
             <FrontendExclusiveProduct />
             <FrontendPolicy />

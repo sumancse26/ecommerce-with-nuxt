@@ -30,16 +30,6 @@ export default defineNuxtConfig({
                 { src: '/assets/js/jquery-3.7.1.min.js', type: 'text/javascript' },
                 { src: '/assets/js/popper.min.js', type: 'text/javascript' },
                 { src: '/assets/bootstrap/js/bootstrap.min.js', type: 'text/javascript' }
-                // { src: '/assets/owlcarousel/js/owl.carousel.min.js', type: 'text/javascript', defer: true },
-                // { src: '/assets/js/magnific-popup.min.js', type: 'text/javascript', defer: true },
-                // { src: '/assets/js/waypoints.min.js', type: 'text/javascript', defer: true },
-                // { src: '/assets/js/parallax.js', type: 'text/javascript', defer: true },
-                // { src: '/assets/js/jquery.countdown.min.js', type: 'text/javascript', defer: true },
-                // { src: '/assets/js/imagesloaded.pkgd.min.js', type: 'text/javascript', defer: true },
-                // { src: '/assets/js/isotope.min.js', type: 'text/javascript', defer: true },
-                // { src: '/assets/js/slick.min.js', type: 'text/javascript', defer: true },
-                // { src: '/assets/js/jquery.elevatezoom.js', type: 'text/javascript', defer: true },
-                // { src: '/assets/js/scripts.js', type: 'text/javascript', defer: true }
             ]
         }
     }
