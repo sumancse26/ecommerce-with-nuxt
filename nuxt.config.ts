@@ -1,8 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     compatibilityDate: '2024-04-03',
+    runtimeConfig: {
+        public: {
+            apiBaseUrl: process.env.VITE_API_URL || 'http://ecommerce.test/api'
+        }
+    },
+    plugins: [
+        '~/plugins/axios.js' // Correct path to the axios plugin
+    ],
     devtools: { enabled: true },
     css: ['~/assets/main.css'],
+
     app: {
         head: {
             title: 'Nuxt TypeScript',
@@ -18,20 +27,19 @@ export default defineNuxtConfig({
                 }
             ],
             script: [
-                { src: '/assets/js/jquery-3.7.1.min.js', type: 'text/javascript', defer: true },
-                { src: '/assets/js/popper.min.js', type: 'text/javascript', defer: true },
-                { src: '/assets/bootstrap/js/bootstrap.min.js', type: 'text/javascript', defer: true },
-                { src: '/assets/owlcarousel/js/owl.carousel.min.js', type: 'text/javascript', defer: true },
-                { src: '/assets/js/magnific-popup.min.js', type: 'text/javascript', defer: true },
-                { src: '/assets/js/waypoints.min.js', type: 'text/javascript', defer: true },
-                { src: '/assets/js/parallax.js', type: 'text/javascript', defer: true },
-                { src: '/assets/js/jquery.countdown.min.js', type: 'text/javascript', defer: true },
-                { src: '/assets/js/imagesloaded.pkgd.min.js', type: 'text/javascript', defer: true },
-                { src: '/assets/js/isotope.min.js', type: 'text/javascript', defer: true },
-                { src: '/assets/js/jquery.dd.min.js', type: 'text/javascript', defer: true },
-                { src: '/assets/js/slick.min.js', type: 'text/javascript', defer: true },
-                { src: '/assets/js/jquery.elevatezoom.js', type: 'text/javascript', defer: true },
-                { src: '/assets/js/scripts.js', type: 'text/javascript', defer: true }
+                { src: '/assets/js/jquery-3.7.1.min.js', type: 'text/javascript' },
+                { src: '/assets/js/popper.min.js', type: 'text/javascript' },
+                { src: '/assets/bootstrap/js/bootstrap.min.js', type: 'text/javascript' }
+                // { src: '/assets/owlcarousel/js/owl.carousel.min.js', type: 'text/javascript', defer: true },
+                // { src: '/assets/js/magnific-popup.min.js', type: 'text/javascript', defer: true },
+                // { src: '/assets/js/waypoints.min.js', type: 'text/javascript', defer: true },
+                // { src: '/assets/js/parallax.js', type: 'text/javascript', defer: true },
+                // { src: '/assets/js/jquery.countdown.min.js', type: 'text/javascript', defer: true },
+                // { src: '/assets/js/imagesloaded.pkgd.min.js', type: 'text/javascript', defer: true },
+                // { src: '/assets/js/isotope.min.js', type: 'text/javascript', defer: true },
+                // { src: '/assets/js/slick.min.js', type: 'text/javascript', defer: true },
+                // { src: '/assets/js/jquery.elevatezoom.js', type: 'text/javascript', defer: true },
+                // { src: '/assets/js/scripts.js', type: 'text/javascript', defer: true }
             ]
         }
     }

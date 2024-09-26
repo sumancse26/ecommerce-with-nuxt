@@ -14,11 +14,11 @@ PAGE JS
     /*===================================*
 	01. LOADING JS
 	/*===================================*/
-    $(window).on('load', function () {
-        setTimeout(function () {
-            $('.preloader').delay(700).fadeOut(700).addClass('loaded');
-        }, 800);
-    });
+    // $(window).on('load', function () {
+    //     setTimeout(function () {
+    //         $('.preloader').delay(700).fadeOut(700).addClass('loaded');
+    //     }, 800);
+    // });
 
     /*===================================*
 	02. BACKGROUND IMAGE JS
@@ -583,15 +583,6 @@ PAGE JS
     if ($('.fit-videos').length > 0) {
         $('.fit-videos').fitVids({
             customSelector: "iframe[src^='https://w.soundcloud.com']"
-        });
-    }
-
-    /*==============================================================
-    15. DROPDOWN JS
-    ==============================================================*/
-    if ($('.custome_select').length > 0) {
-        $(document).ready(function () {
-            $('.custome_select').msDropdown();
         });
     }
 
