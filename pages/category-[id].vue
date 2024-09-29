@@ -1,29 +1,30 @@
 <script setup>
     const { $axios } = useNuxtApp();
 
+    const route = useRoute();
+    const id = route.params.id;
+    const catName = route.query.catName;
     const products = ref([]);
-    const getProducts = async () => {
+    const tagInfo = ref({ tagName: 'category', tagValue: catName });
+
+    const getProductByCategory = async (catId) => {
         try {
             products.value = [];
-            const res = await $axios.get('/get-products');
-            products.value = res.data.products;
+            const res = await $axios.get(`/product-list-by-category/${catId}`);
+            products.value = res.data.productList;
         } catch (e) {
             products.value = [];
             console.log(e);
         }
     };
-    onMounted(() => {
-        getProducts();
-    });
+
+    getProductByCategory(id);
 </script>
 
 <template>
     <div>
         <div class="main_content">
-            <FrontendBanner />
-            <FrontendProducts :products="products" tag="allProducts" />
-            <FrontendNewCollection />
-            <FrontendProducts :products="products" tag="exclusiveProducts" />
+            <FrontendProducts :tag="tagInfo" :products="products" />
             <FrontendPolicy />
             <FrontendNewsLetter />
         </div>

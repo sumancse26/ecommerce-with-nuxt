@@ -1,34 +1,21 @@
 <script setup>
-    const { $axios } = useNuxtApp();
+    const initialData = defineModel('initialData', { type: Object });
 
-    const categories = ref([]);
-    const brandList = ref([]);
+    const categories = computed(() => {
+        return initialData.value.categories;
+    });
 
-    const getCategories = async () => {
-        try {
-            categories.value = [];
-            const res = await $axios.get('/category-list');
-            categories.value = res.data.categoryList;
-        } catch (e) {
-            categories.value = [];
-            console.log(e);
-        }
-    };
+    const brandList = computed(() => {
+        return initialData.value.brandList;
+    });
 
-    const getBrands = async () => {
-        try {
-            brandList.value = [];
-            const res = await $axios.get('/brand-list');
-            brandList.value = res.data.brandList;
-        } catch (e) {
-            brandList.value = [];
-            console.log(e);
-        }
-    };
-
-    onMounted(() => {
-        getCategories();
-        getBrands();
+    const cartList = computed(() => {
+        return initialData.value.cartList || [];
+    });
+    const subTotal = computed(() => {
+        return cartList.value?.reduce((total, item) => {
+            return total + Number(item.price);
+        }, 0);
     });
 </script>
 
@@ -63,8 +50,8 @@
             <div class="container">
                 <nav class="navbar navbar-expand-lg">
                     <a class="navbar-brand" href="index.html">
-                        <img class="logo_light" src="../../public/assets/images/logo_light.png" alt="logo" />
-                        <img class="logo_dark" src="../../public/assets/images/logo_dark.png" alt="logo" />
+                        <img class="logo_light" src="/assets/images/logo_light.png" alt="logo" />
+                        <img class="logo_dark" src="/assets/images/logo_dark.png" alt="logo" />
                     </a>
                     <button
                         class="navbar-toggler"
@@ -84,9 +71,15 @@
                                 <div class="dropdown-menu">
                                     <ul>
                                         <li v-for="category in categories" :key="category.id">
-                                            <a class="dropdown-item nav-link nav_item" href="about.html">{{
-                                                category.categoryName
-                                            }}</a>
+                                            <NuxtLink
+                                                :to="{
+                                                    name: 'category-id',
+                                                    params: { id: category.id },
+                                                    query: { catName: category.categoryName }
+                                                }"
+                                                class="dropdown-item nav-link nav_item"
+                                                >{{ category.categoryName }}</NuxtLink
+                                            >
                                         </li>
                                     </ul>
                                 </div>
@@ -127,30 +120,17 @@
                             >
                             <div class="cart_box dropdown-menu dropdown-menu-right">
                                 <ul class="cart_list">
-                                    <li>
+                                    <li v-for="cart in cartList" :key="cart.id">
                                         <a href="#" class="item_remove"><i class="ion-close"></i></a>
                                         <a href="#"
-                                            ><img
-                                                src="../../public/assets/images/cart_thamb1.jpg"
-                                                alt="cart_thumb1" />Variable product 001</a
+                                            ><img :src="cart.product.image" alt="cart_thumb1" />{{
+                                                cart.product.title
+                                            }}</a
                                         >
                                         <span class="cart_quantity">
-                                            1 x
-                                            <span class="cart_amount"> <span class="price_symbole">$</span></span
-                                            >78.00</span
-                                        >
-                                    </li>
-                                    <li>
-                                        <a href="#" class="item_remove"><i class="ion-close"></i></a>
-                                        <a href="#"
-                                            ><img
-                                                src="../../public/assets/images/cart_thamb2.jpg"
-                                                alt="cart_thumb2" />Ornare sed consequat</a
-                                        >
-                                        <span class="cart_quantity">
-                                            1 x
-                                            <span class="cart_amount"> <span class="price_symbole">$</span></span
-                                            >81.00</span
+                                            {{ cart.qty }} x
+                                            <span class="cart_amount"> <span class="price_symbole">$ </span></span
+                                            >{{ cart.product.price }}</span
                                         >
                                     </li>
                                 </ul>
@@ -158,7 +138,7 @@
                                     <p class="cart_total">
                                         <strong>Subtotal:</strong>
                                         <span class="cart_price"> <span class="price_symbole">$</span></span
-                                        >159.00
+                                        >{{ subTotal }}
                                     </p>
                                     <p class="cart_buttons">
                                         <a href="#" class="btn btn-fill-line rounded-0 view-cart">View Cart</a
