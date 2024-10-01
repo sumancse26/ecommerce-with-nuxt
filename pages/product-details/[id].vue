@@ -23,7 +23,6 @@
     <div>
         <div class="main_content">
             <FrontendProductDetails :product-details="prodDtl" />
-            <FrontendNewsLetter />
         </div>
 
         <a href="#" class="scrollup" style="display: none"><i class="ion-ios-arrow-up"></i></a>

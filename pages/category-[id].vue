@@ -26,7 +26,6 @@
         <div class="main_content">
             <FrontendProducts :tag="tagInfo" :products="products" />
             <FrontendPolicy />
-            <FrontendNewsLetter />
         </div>
 
         <a href="#" class="scrollup" style="display: none"><i class="ion-ios-arrow-up"></i></a>

@@ -17,6 +17,24 @@
         }
     };
 
+    const removeCardHandler = async (id) => {
+        try {
+            await $axios.delete(`/remove-cart/${id}`);
+            getCart();
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const getCart = async () => {
+        try {
+            const res = await $axios.get('/get-cart-list');
+            store.cartList = res.data.cartList || [];
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     const cartList = computed(() => {
         return store.cartList;
     });
@@ -160,7 +178,9 @@
                             <div class="cart_box dropdown-menu dropdown-menu-right">
                                 <ul class="cart_list">
                                     <li v-for="cart in cartList" :key="cart.id">
-                                        <a href="#" class="item_remove"><i class="ion-close"></i></a>
+                                        <a @click="removeCardHandler(cart.id)" class="item_remove"
+                                            ><i class="ion-close"></i
+                                        ></a>
                                         <a href="#"
                                             ><img :src="cart.product?.image" alt="cart_thumb1" />{{
                                                 cart.product?.title
@@ -180,8 +200,10 @@
                                         >{{ subTotal }}
                                     </p>
                                     <p class="cart_buttons">
-                                        <a href="#" class="btn btn-fill-line rounded-0 view-cart">View Cart</a
-                                        ><a href="#" class="btn btn-fill-out rounded-0 checkout">Checkout</a>
+                                        <NuxtLink to="/product-cart" class="btn btn-fill-line rounded-0 view-cart"
+                                            >View Cart</NuxtLink
+                                        >
+                                        <a href="#" class="btn btn-fill-out rounded-0 checkout">Checkout</a>
                                     </p>
                                 </div>
                             </div>

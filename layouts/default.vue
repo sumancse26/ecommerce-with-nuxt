@@ -1,4 +1,9 @@
 <script setup>
+    import Cookies from 'js-cookie';
+    import { useEcomStore } from '~/store/ecomStore';
+
+    const store = useEcomStore();
+    const token = Cookies.get('token');
     const { $axios } = useNuxtApp();
     const initialData = ref({
         categories: [],
@@ -27,14 +32,37 @@
         }
     };
 
+    const getCart = async () => {
+        try {
+            const res = await $axios.get('/get-cart-list');
+            store.cartList = res.data.cartList || [];
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const getWishList = async () => {
+        try {
+            const res = await $axios.get(`/get-wish-list`);
+            store.wishList = res.data.wishList || [];
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     onMounted(() => {
         getCategories();
         getBrands();
+        if (token) {
+            getCart();
+            getWishList();
+        }
     });
 </script>
 
 <template>
     <FrontendHeader v-model:initial-data="initialData" />
     <slot />
+    <FrontendNewsLetter />
     <FrontendFooter />
 </template>

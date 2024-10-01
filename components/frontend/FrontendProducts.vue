@@ -147,12 +147,10 @@
                                             <div class="product_action_box">
                                                 <ul class="list_none pr_action_btn">
                                                     <li class="add-to-cart" @click="addToCartHandler(product)">
-                                                        <NuxtLink
-                                                            ><i class="icon-basket-loaded"></i> Add To Cart</NuxtLink
-                                                        >
+                                                        <a><i class="icon-basket-loaded"></i> Add To Cart</a>
                                                     </li>
                                                     <li @click="addToWishList(product)">
-                                                        <NuxtLink><i class="icon-heart"></i></NuxtLink>
+                                                        <a><i class="icon-heart"></i></a>
                                                     </li>
                                                 </ul>
                                             </div>
