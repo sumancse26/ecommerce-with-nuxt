@@ -17,6 +17,8 @@ export default defineNuxtPlugin((nuxtApp) => {
 
         if (token) {
             config.headers['Authorization'] = `${token}`;
+        } else {
+            config.headers['Authorization'] = '';
         }
         return config;
     };
@@ -32,7 +34,6 @@ export default defineNuxtPlugin((nuxtApp) => {
         const status = error.response?.status || 500;
 
         if (!error.config?.url?.endsWith('login') && status == 401) {
-            location.reload();
             Cookies.remove('token');
         }
         const messages = {

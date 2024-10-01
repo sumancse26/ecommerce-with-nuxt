@@ -1,25 +1,21 @@
 <script setup>
-    import Cookies from 'js-cookie';
-    import { useRoute } from 'vue-router';
     import { navigateTo } from 'nuxt/app';
     const { $axios } = useNuxtApp();
+    const email = ref('');
+    const isRequired = ref(false);
+    const sendOtp = async () => {
+        if (!email.value) {
+            isRequired.value = true;
+            return;
+        }
+        isRequired.value = false;
+        const params = {
+            email: email.value
+        };
+        const res = await $axios.get('/login', { params });
 
-    const route = useRoute();
-    const email = ref(route.query.email);
-    const otp = ref('');
-
-    const verifyBtnHandler = async () => {
-        try {
-            const data = {
-                email: email.value,
-                otp: otp.value
-            };
-            const res = await $axios.post('/verify', data);
-
-            Cookies.set('token', res.data.token, { expires: 7 });
-            navigateTo('/');
-        } catch (e) {
-            console.log(e);
+        if (res.data.success) {
+            navigateTo({ path: '/verify', query: { email: email.value } });
         }
     };
 </script>
@@ -32,31 +28,20 @@
                     <div class="login_wrap">
                         <div class="padding_eight_all bg-white">
                             <div class="heading_s1">
-                                <h3>Verify Otp</h3>
+                                <h3>Login</h3>
                             </div>
-                            <form @submit.prevent="verifyBtnHandler">
+                            <form @submit.prevent="sendOtp">
                                 <div class="form-group mb-3">
                                     <input
-                                        v-model="email"
-                                        type="text"
-                                        required
-                                        disabled
+                                        v-model.trim="email"
+                                        type="email"
                                         class="form-control"
-                                        name="email" />
+                                        name="email"
+                                        :class="{ 'is-invalid': !email && isRequired }"
+                                        placeholder="Your Email" />
                                 </div>
                                 <div class="form-group mb-3">
-                                    <input
-                                        v-model="otp"
-                                        class="form-control"
-                                        required
-                                        type="text"
-                                        name="password"
-                                        placeholder="otp" />
-                                </div>
-                                <div class="form-group mb-3">
-                                    <button type="submit" class="btn btn-fill-out btn-block" name="login">
-                                        CONFIRM
-                                    </button>
+                                    <button type="submit" class="btn btn-fill-out btn-block" name="login">NEXT</button>
                                 </div>
                             </form>
                         </div>

@@ -1,5 +1,35 @@
 <script setup>
+    import Cookies from 'js-cookie';
+    import { useEcomStore } from '@/store/ecomStore';
+
+    const { $axios } = useNuxtApp();
     const initialData = defineModel('initialData', { type: Object });
+    const token = Cookies.get('token');
+    const store = useEcomStore();
+
+    const logoutBtnHandler = async () => {
+        try {
+            await $axios.get('/logout');
+            Cookies.remove('token');
+            navigateTo('/login');
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const cartList = computed(() => {
+        return store.cartList;
+    });
+
+    const wishList = computed(() => {
+        return store.wishList;
+    });
+
+    const subTotal = computed(() => {
+        return cartList.value.reduce((total, item) => {
+            return total + Number(item.price);
+        }, 0);
+    });
 
     const categories = computed(() => {
         return initialData.value.categories;
@@ -7,15 +37,6 @@
 
     const brandList = computed(() => {
         return initialData.value.brandList;
-    });
-
-    const cartList = computed(() => {
-        return initialData.value.cartList || [];
-    });
-    const subTotal = computed(() => {
-        return cartList.value?.reduce((total, item) => {
-            return total + Number(item.price);
-        }, 0);
     });
 </script>
 
@@ -35,10 +56,21 @@
                         <div class="text-center text-md-end">
                             <ul class="header_list">
                                 <li>
-                                    <a href="wishlist.html"><i class="ti-heart"></i><span>Wishlist</span></a>
+                                    <NuxtLink to="/wish-list"
+                                        ><i class="ti-heart"></i
+                                        ><span
+                                            >Wishlist(<span class="text-danger">{{ wishList.length || 0 }}</span
+                                            >)</span
+                                        ></NuxtLink
+                                    >
                                 </li>
                                 <li>
-                                    <NuxtLink to="/verify"><i class="ti-user"></i><span>Login</span></NuxtLink>
+                                    <NuxtLink v-if="!token" to="/login"
+                                        ><i class="ti-user"></i><span>Login </span></NuxtLink
+                                    >
+                                    <NuxtLink v-else @click="logoutBtnHandler" class="cursor-pointer"
+                                        ><i class="ti-user"></i><span>Logout </span></NuxtLink
+                                    >
                                 </li>
                             </ul>
                         </div>
@@ -49,10 +81,10 @@
         <div class="bottom_header dark_skin main_menu_uppercase">
             <div class="container">
                 <nav class="navbar navbar-expand-lg">
-                    <a class="navbar-brand" href="index.html">
+                    <NuxtLink to="/" class="navbar-brand">
                         <img class="logo_light" src="/assets/images/logo_light.png" alt="logo" />
                         <img class="logo_dark" src="/assets/images/logo_dark.png" alt="logo" />
-                    </a>
+                    </NuxtLink>
                     <button
                         class="navbar-toggler"
                         type="button"
@@ -67,7 +99,7 @@
                                 <NuxtLink class="nav-link active" to="/">Home</NuxtLink>
                             </li>
                             <li class="dropdown">
-                                <a class="dropdown-toggle nav-link" href="#" data-bs-toggle="dropdown">Categories</a>
+                                <a class="dropdown-toggle nav-link" data-bs-toggle="dropdown">Categories</a>
                                 <div class="dropdown-menu">
                                     <ul>
                                         <li v-for="category in categories" :key="category.id">
@@ -75,7 +107,7 @@
                                                 :to="{
                                                     name: 'category-id',
                                                     params: { id: category.id },
-                                                    query: { catName: category.categoryName }
+                                                    query: { name: category.categoryName }
                                                 }"
                                                 class="dropdown-item nav-link nav_item"
                                                 >{{ category.categoryName }}</NuxtLink
@@ -85,13 +117,19 @@
                                 </div>
                             </li>
                             <li class="dropdown">
-                                <a class="dropdown-toggle nav-link" href="#" data-bs-toggle="dropdown">Brands</a>
+                                <a class="dropdown-toggle nav-link" data-bs-toggle="dropdown">Brands</a>
                                 <div class="dropdown-menu">
                                     <ul>
                                         <li v-for="brand in brandList" :key="brand.id">
-                                            <a class="dropdown-item nav-link nav_item" href="about.html">{{
-                                                brand.brandName
-                                            }}</a>
+                                            <NuxtLink
+                                                :to="{
+                                                    name: 'brand-id',
+                                                    params: { id: brand.id },
+                                                    query: { name: brand.brandName }
+                                                }"
+                                                class="dropdown-item nav-link nav_item"
+                                                >{{ brand.brandName }}</NuxtLink
+                                            >
                                         </li>
                                     </ul>
                                 </div>
@@ -115,22 +153,23 @@
                             <div class="search_overlay"></div>
                         </li>
                         <li class="dropdown cart_dropdown">
-                            <a class="nav-link cart_trigger" href="#" data-bs-toggle="dropdown"
-                                ><i class="linearicons-cart"></i><span class="cart_count">2</span></a
+                            <a class="nav-link cart_trigger" data-bs-toggle="dropdown"
+                                ><i class="linearicons-cart"></i
+                                ><span class="cart_count">{{ cartList?.length || 0 }}</span></a
                             >
                             <div class="cart_box dropdown-menu dropdown-menu-right">
                                 <ul class="cart_list">
                                     <li v-for="cart in cartList" :key="cart.id">
                                         <a href="#" class="item_remove"><i class="ion-close"></i></a>
                                         <a href="#"
-                                            ><img :src="cart.product.image" alt="cart_thumb1" />{{
-                                                cart.product.title
+                                            ><img :src="cart.product?.image" alt="cart_thumb1" />{{
+                                                cart.product?.title
                                             }}</a
                                         >
                                         <span class="cart_quantity">
                                             {{ cart.qty }} x
                                             <span class="cart_amount"> <span class="price_symbole">$ </span></span
-                                            >{{ cart.product.price }}</span
+                                            >{{ cart.product?.price }}</span
                                         >
                                     </li>
                                 </ul>
@@ -153,3 +192,9 @@
         </div>
     </header>
 </template>
+
+<style lang="css" scoped>
+    .cursor-pointer {
+        cursor: pointer;
+    }
+</style>

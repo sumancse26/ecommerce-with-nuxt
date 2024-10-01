@@ -6,11 +6,9 @@ export default defineNuxtConfig({
             apiBaseUrl: process.env.VITE_API_URL || 'http://ecommerce.test/api'
         }
     },
-    plugins: [
-        '~/plugins/axios.js' // Correct path to the axios plugin
-    ],
     devtools: { enabled: true },
     css: ['~/assets/main.css'],
+    modules: ['@pinia/nuxt'],
 
     app: {
         head: {

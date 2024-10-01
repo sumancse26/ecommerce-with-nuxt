@@ -3,14 +3,14 @@
 
     const route = useRoute();
     const id = route.params.id;
-    const catName = route.query.name;
+    const brandName = route.query.name;
     const products = ref([]);
-    const tagInfo = ref({ tagName: 'category', tagValue: catName });
+    const tagInfo = ref({ tagName: 'brand', tagValue: brandName });
 
-    const getProductByCategory = async (catId) => {
+    const getProductByBrand = async (brandId) => {
         try {
             products.value = [];
-            const res = await $axios.get(`/product-list-by-category/${catId}`);
+            const res = await $axios.get(`/product-list-by-brand/${brandId}`);
             products.value = res.data.productList;
         } catch (e) {
             products.value = [];
@@ -18,7 +18,7 @@
         }
     };
 
-    getProductByCategory(id);
+    getProductByBrand(id);
 </script>
 
 <template>

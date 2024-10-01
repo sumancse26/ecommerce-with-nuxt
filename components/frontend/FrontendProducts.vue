@@ -1,8 +1,53 @@
 <script setup>
+    import { useEcomStore } from '~/store/ecomStore';
+    const { $axios } = useNuxtApp();
     const props = defineProps({
         products: Array,
         tag: String
     });
+    const store = useEcomStore();
+
+    const addToCartHandler = async (product) => {
+        try {
+            const data = {
+                id: null,
+                product_id: product.id,
+                color: '',
+                size: '',
+                qty: null
+            };
+            await $axios.post('/create-update-cart', data);
+            getCart();
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const getCart = async () => {
+        try {
+            const res = await $axios.get('/get-cart-list');
+            store.cartList = res.data.cartList || [];
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const addToWishList = async (product) => {
+        try {
+            await $axios.get(`/create-update-wish/${product.id}`);
+            getWishList();
+        } catch (e) {
+            console.log(e);
+        }
+    };
+    const getWishList = async () => {
+        try {
+            const res = await $axios.get(`/get-wish-list`);
+            store.wishList = res.data.wishList || [];
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     const getProducts = computed(() => {
         return props.products || [];
@@ -25,6 +70,10 @@
                 </div>
                 <h2 class="d-flex align-items-center" v-if="getTag.tagName == 'category'">
                     Category:
+                    <p class="p-0 m-0 ps-2 mt-1">{{ getTag.tagValue }}</p>
+                </h2>
+                <h2 class="d-flex align-items-center" v-if="getTag.tagName == 'brand'">
+                    Brand:
                     <p class="p-0 m-0 ps-2 mt-1">{{ getTag.tagValue }}</p>
                 </h2>
             </div>
@@ -97,18 +146,22 @@
                                             </a>
                                             <div class="product_action_box">
                                                 <ul class="list_none pr_action_btn">
-                                                    <li class="add-to-cart">
-                                                        <a href="#"><i class="icon-basket-loaded"></i> Add To Cart</a>
+                                                    <li class="add-to-cart" @click="addToCartHandler(product)">
+                                                        <NuxtLink
+                                                            ><i class="icon-basket-loaded"></i> Add To Cart</NuxtLink
+                                                        >
                                                     </li>
-                                                    <li>
-                                                        <a href="#"><i class="icon-heart"></i></a>
+                                                    <li @click="addToWishList(product)">
+                                                        <NuxtLink><i class="icon-heart"></i></NuxtLink>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="product_info">
                                             <h6 class="product_title">
-                                                <a href="shop-product-detail.html">{{ product.title }}</a>
+                                                <NuxtLink :to="`product-details/${product.id}`">{{
+                                                    product.title
+                                                }}</NuxtLink>
                                             </h6>
                                             <div class="product_price">
                                                 <span class="price">${{ product.price }}</span>
