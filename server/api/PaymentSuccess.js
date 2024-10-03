@@ -5,7 +5,11 @@ export default defineEventHandler(async (event) => {
         const tranId = query.tran_id;
         const response = await axios.post('http://ecommerce.test/api/payment-success', { tran_id: tranId });
 
-        return response.data;
+        if (response.data.success) {
+            return sendRedirect(event, `/payment-success?tran_id=${tranId}`);
+        } else {
+            return { success: false, message: 'Payment failed' };
+        }
     } catch (error) {
         return { success: false, error: error.message };
     }
