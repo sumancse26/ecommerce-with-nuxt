@@ -16,7 +16,7 @@
                 size: '',
                 qty: null
             };
-            await $axios.post('/create-update-cart', data);
+            await $axios.post('/create-update-cart', [data]);
             getCart();
         } catch (e) {
             console.log(e);

@@ -74,6 +74,14 @@
                         <div class="text-center text-md-end">
                             <ul class="header_list">
                                 <li>
+                                    <NuxtLink to="/order">
+                                        <span class="material-symbols-outlined font-size-80" style="font-size: 20px">
+                                            orders
+                                        </span>
+                                        <span> Orders</span></NuxtLink
+                                    >
+                                </li>
+                                <li>
                                     <NuxtLink to="/wish-list"
                                         ><i class="ti-heart"></i
                                         ><span
