@@ -35,6 +35,9 @@
 <template>
     <div class="container">
         <h2>Your Orders</h2>
+        <!-- <template>
+            <UProgress animation="carousel" />
+        </template> -->
         <table>
             <thead>
                 <tr>
@@ -63,7 +66,12 @@
                                 >More</a
                             >
 
-                            <NuxtLink :to="{ name: 'payment', query: { inv_id: order.id } }" class="btn">Pay</NuxtLink>
+                            <NuxtLink
+                                v-if="order.payment_status === 'Pending'"
+                                :to="{ name: 'payment', query: { inv_id: order.id } }"
+                                class="btn"
+                                >Pay</NuxtLink
+                            >
                         </div>
                     </td>
                 </tr>

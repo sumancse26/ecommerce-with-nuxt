@@ -223,7 +223,7 @@
     </header>
 </template>
 
-<style lang="css" scoped>
+<style scoped>
     .cursor-pointer {
         cursor: pointer;
     }

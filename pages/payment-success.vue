@@ -29,7 +29,7 @@
                     <span>Payment Status:</span> <span class="payment-status">{{ invoice.payment_status }}</span>
                 </p>
             </div>
-            <NuxtLink to="/" class="btn">Back to Profile</NuxtLink>
+            <NuxtLink to="/" class="btn">Back to Home</NuxtLink>
         </div>
     </div>
 </template>
